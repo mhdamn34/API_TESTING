@@ -21,15 +21,15 @@ class ExStatmentController extends Controller
             if (base64_decode($id, true)) {
                
                $sqlq = base64_decode($id);
-               \LogActivity::addToLog($sqlq);
+               //\LogActivity::addToLog($sqlq);
                if (strpos($sqlq, 'tb') !== false) {
                   $slt = DB::select($sqlq);
                   if($slt==NULL){
-                     \LogActivity::addToLog("Record not found!");
+                    // \LogActivity::addToLog("Record not found!");
                      return response()->json([ "success" => "false",
                      "mesage" => "Record not found!","result" =>""], 404); 
                   }else{
-                     \LogActivity::addToLog('success get record');  
+                     //\LogActivity::addToLog('success get record');  
                      $dat = response()->json($slt);
                      $ciphertext = base64_encode($dat);
                      return response()->json([ "success" => "true",
@@ -37,17 +37,17 @@ class ExStatmentController extends Controller
                      //return response()->json($slt, 200);                
                   }
                }else{
-                  \LogActivity::addToLog('invalid encode value');
+                  //\LogActivity::addToLog('invalid encode value');
                   return response()->json([ "success" => "false",
                   "mesage" => "invalid encode value","result" =>""], 400);   
                }
             }else{
-               \LogActivity::addToLog('invalid encode value');
+               //\LogActivity::addToLog('invalid encode value');
                return response()->json([ "success" => "false",
                "mesage" => "invalid encode value","result" =>""], 400);   
             }
          } catch(QueryException $ex){ 
-            \LogActivity::addToLog($ex->getMessage());
+            //\LogActivity::addToLog($ex->getMessage());
             return response()->json([ "success" => "false",
             "mesage" => $ex->getMessage(),"result" =>""], 400);
          }
